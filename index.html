@@ -3,8 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cajun French API — Le français cadien deserves digital infrastructure</title>
-  <meta name="description" content="A structured, searchable lexicon of Cajun French — built for developers, educators, linguists, and the communities who speak it." />
+  <title>Cajun French API · A structured lexicon of français cadien</title>
+  <meta name="description" content="A searchable, citable lexicon of Cajun French — built for developers, educators, linguists, and the communities who speak it. Built by Amanda Jones." />
+  <meta name="author" content="Amanda Jones" />
+
+  <link rel="canonical" href="https://cajunfrench.zoasystems.dev/" />
+
+  <!-- Open Graph (Facebook, LinkedIn, iMessage, Slack, Discord) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://cajunfrench.zoasystems.dev/" />
+  <meta property="og:title" content="Cajun French API" />
+  <meta property="og:description" content="Le français cadien deserves digital infrastructure. A searchable, citable lexicon of Cajun French — for developers, educators, linguists, and the communities who speak it." />
+  <meta property="og:image" content="https://cajunfrench.zoasystems.dev/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Cajun French API — Le français cadien deserves digital infrastructure" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Cajun French API" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Cajun French API" />
+  <meta name="twitter:description" content="Le français cadien deserves digital infrastructure. A searchable, citable lexicon of Cajun French." />
+  <meta name="twitter:image" content="https://cajunfrench.zoasystems.dev/og-image.png" />
+  <meta name="twitter:image:alt" content="Cajun French API — Le français cadien deserves digital infrastructure" />
+
+  <!-- Structured data: identifies the project + its author for search engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://cajunfrench.zoasystems.dev/#website",
+        "url": "https://cajunfrench.zoasystems.dev/",
+        "name": "Cajun French API",
+        "description": "A structured, searchable lexicon of Cajun French.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://cajunfrench.zoasystems.dev/#person" }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://cajunfrench.zoasystems.dev/#person",
+        "name": "Amanda Jones",
+        "alternateName": "Amanda Coulon",
+        "url": "https://zoasystems.dev",
+        "email": "cajunfrenchapi@gmail.com",
+        "jobTitle": "Software developer"
+      },
+      {
+        "@type": "CreativeWork",
+        "name": "Cajun French API",
+        "alternateName": "Le français cadien API",
+        "description": "A REST API offering structured entries for Cajun French vocabulary: regional tagging by parish, spelling variants, loanword etymology, part of speech, and example sentences.",
+        "url": "https://cajunfrench.zoasystems.dev/",
+        "inLanguage": ["en", "frc"],
+        "about": [
+          { "@type": "Language", "name": "Cajun French", "alternateName": "français cadien" },
+          { "@type": "Thing", "name": "Endangered language documentation" },
+          { "@type": "Thing", "name": "Louisiana French" }
+        ],
+        "creator": { "@id": "https://cajunfrench.zoasystems.dev/#person" }
+      }
+    ]
+  }
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
