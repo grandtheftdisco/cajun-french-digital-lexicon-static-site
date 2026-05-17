@@ -2,6 +2,11 @@
 
 Static landing page for the [Cajun French API](https://cajunfrench.zoasystems.dev) — a community-curated digital lexicon of *le français cadien*.
 
+## Purpose
+
+- This is a passion project. I come from a Cajun family but the language was lost in my parents' generation, due to [governmental suppression and social persecution](https://www.mikegravel.org/why-is-cajun-french-in-danger-of-disappearing/).
+- ⚜️<em>Es-tu cadien(ne)?</em> Ou es-tu un developer? [I'd love to hear from you.](mailto:cajunfrenchapi@gmail.com)
+
 ## Stack
 
 - HTML + [Tailwind CSS](https://tailwindcss.com/) (CDN)
