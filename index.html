@@ -142,7 +142,10 @@
     .frame--final .frame-inner {
       flex: 1;
       align-items: flex-start;
-      padding-top: 3.5rem;
+      padding-top: 5rem; /* matches py-20 used on other frames */
+    }
+    @media (min-width: 640px) {
+      .frame--final .frame-inner { padding-top: 8rem; } /* matches sm:py-32 */
     }
     .frame--final .scroll-hint {
       position: static;
@@ -214,13 +217,14 @@
           <span class="cadien">Le français cadien</span> deserves digital infrastructure.
         </p>
 
-        <p class="text-base sm:text-lg leading-relaxed text-cream/85 max-w-2xl mb-10 font-light">
+        <p class="text-base sm:text-lg leading-relaxed text-cream max-w-2xl mb-10 font-light">
           A structured, searchable lexicon of <span class="cadien">français cadien</span> — built for developers, educators, linguists, and the communities who speak it.
         </p>
 
-        <p class="text-sm text-cream/65 tracking-wide">
+        <p class="text-cream/65 tracking-wide">
           Built by Amanda Jones (Coulon)
         </p>
+        <span class="cadien text-sm text-cream/80">pour ma mémère.</span>
       </div>
     </div>
 
@@ -381,7 +385,9 @@
           Whether you're a heritage speaker, a researcher, a developer, a cultural institution, or a reclamation learner like me, I'd like to hear from you. This project is in active development and I'm seeking collaborators, community input, and institutional partners.
         </p>
 
-        <p class="text-lg">
+        <span class="cadien">Venez comme vous êtes.</span>
+
+        <p class="text-lg mt-10">
           <a href="mailto:cajunfrenchapi@gmail.com" class="email-link font-serif text-xl text-crawfish">
             cajunfrenchapi@gmail.com
           </a>
