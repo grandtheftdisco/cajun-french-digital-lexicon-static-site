@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <rect width="32" height="32" fill="#8B1A1A" rx="6"/>
+  <!-- Top brace — knuckle bumps UP -->
+  <path d="M 5,13 C 5,13 6,9 9,9 L 13.5,9 C 13.5,9 16,9 16,6 C 16,9 18.5,9 18.5,9 L 23,9 C 23,9 26,9 27,13"
+        fill="none" stroke="#F5E6E6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Bottom brace — knuckle bumps DOWN -->
+  <path d="M 5,19 C 5,19 6,23 9,23 L 13.5,23 C 13.5,23 16,23 16,26 C 16,23 18.5,23 18.5,23 L 23,23 C 23,23 26,23 27,19"
+        fill="none" stroke="#F5E6E6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Bow — left point -->
+  <path d="M 5,13 Q 2,16 5,19" fill="none" stroke="#D4A0A0" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- Stern — right point -->
+  <path d="M 27,13 Q 30,16 27,19" fill="none" stroke="#D4A0A0" stroke-width="1.8" stroke-linecap="round"/>
+</svg>
