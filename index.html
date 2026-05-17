@@ -150,6 +150,21 @@
       border-bottom-color: #C9A84C;
       color: #8B1A1A;
     }
+    /* Inline content links: italic serif in crawfish red, gold underline on hover.
+       Opt-in: apply .cadien-link to any <a> that should pick up this treatment. */
+    .cadien-link {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      color: #8B1A1A;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 200ms ease, color 200ms ease;
+    }
+    .cadien-link:hover,
+    .cadien-link:focus-visible {
+      border-bottom-color: #C9A84C;
+      color: #6E1414; /* crawfishdark — slight deepen on hover */
+    }
     /* Frame snap-scroll: each section behaves like its own page on tap */
     html {
       scroll-snap-type: y proximity;
