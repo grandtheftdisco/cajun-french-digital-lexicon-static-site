@@ -78,152 +78,331 @@
       border-bottom-color: #C9A84C;
       color: #8B1A1A;
     }
+    /* Frame snap-scroll: each section behaves like its own page on tap */
+    html {
+      scroll-snap-type: y proximity;
+    }
+    .frame {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      position: relative;
+      min-height: 100svh; /* svh handles iOS Safari URL bar correctly */
+      display: flex;
+      flex-direction: column;
+    }
+    .frame-inner {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    /* Scroll hints: shared base */
+    .scroll-hint {
+      position: absolute;
+      left: 50%;
+      bottom: 1.5rem;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      animation: hint-bob 2.4s ease-in-out infinite;
+      z-index: 10;
+      padding: 0.5rem 0.75rem; /* tap target */
+    }
+    .scroll-hint svg { display: block; }
+    .scroll-hint--light { color: rgba(250, 247, 242, 0.6); }
+    .scroll-hint--light:hover { color: rgba(250, 247, 242, 0.95); }
+    .scroll-hint--dark  { color: rgba(107, 124, 92, 0.85); } /* bayou */
+    .scroll-hint--dark:hover { color: #8B1A1A; }
+
+    /* 'Back to top' hint sits above the footer, chevron points up */
+    .back-to-top {
+      animation: hint-bob-up 2.4s ease-in-out infinite;
+    }
+    @keyframes hint-bob {
+      0%, 100% { transform: translate(-50%, 0); }
+      50%      { transform: translate(-50%, 6px); }
+    }
+    @keyframes hint-bob-up {
+      0%, 100% { transform: translate(-50%, 0); }
+      50%      { transform: translate(-50%, -6px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-snap-type: none; }
+      .scroll-hint, .back-to-top { animation: none; }
+    }
+
+    /* Final frame: contact content fills, hint sits in the middle, footer pins at bottom */
+    .frame--final .frame-inner {
+      flex: 1;
+      align-items: flex-start;
+      padding-top: 3.5rem;
+    }
+    .frame--final .scroll-hint {
+      position: static;
+      transform: none;
+      margin: 0 auto 1.5rem;
+    }
+    .frame--final .back-to-top {
+      animation: hint-bob-static 2.4s ease-in-out infinite;
+    }
+    @keyframes hint-bob-static {
+      0%, 100% { transform: translate(0, 0); }
+      50%      { transform: translate(0, -6px); }
+    }
+
+    /* Mobile accordion for the project cards.
+       Uses <details>/<summary> so it works with zero JS and is accessible. */
+    .card-accordion[open] .card-chevron {
+      transform: rotate(180deg);
+    }
+    .card-chevron {
+      transition: transform 200ms ease;
+    }
+    .card-accordion summary {
+      list-style: none;
+      cursor: pointer;
+    }
+    .card-accordion summary::-webkit-details-marker { display: none; }
+
+    @media (min-width: 768px) {
+      /* On md+, render details/summary as always-open static cards */
+      .card-accordion {
+        pointer-events: auto;
+      }
+      .card-accordion summary {
+        cursor: default;
+      }
+      .card-chevron { display: none; }
+    }
   </style>
+  <script>
+    // On desktop, force-open every accordion card so md+ users see all three at once.
+    (function () {
+      const sync = () => {
+        const open = window.matchMedia('(min-width: 768px)').matches;
+        document.querySelectorAll('.card-accordion').forEach(el => {
+          if (open) el.setAttribute('open', '');
+          else el.removeAttribute('open');
+        });
+      };
+      window.addEventListener('DOMContentLoaded', sync);
+      window.matchMedia('(min-width: 768px)').addEventListener('change', sync);
+    })();
+  </script>
 </head>
 
 <body class="bg-cream text-ink">
 
   <!-- 1. HERO -->
-  <header class="hero-texture text-cream">
-    <div class="max-w-4xl mx-auto px-6 sm:px-10 py-24 sm:py-36 md:py-44">
-      <p class="cadien text-gold text-sm sm:text-base tracking-wide mb-6">— un projet cadien —</p>
+  <header id="hero" class="frame hero-texture text-cream">
+    <div class="frame-inner">
+      <div class="max-w-4xl mx-auto w-full px-6 sm:px-10 py-20 sm:py-36 md:py-44">
+        <p class="cadien text-gold text-sm sm:text-base tracking-wide mb-6">— un projet cadien —</p>
 
-      <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl leading-tight tracking-tight mb-8">
-        Cajun French API
-      </h1>
+        <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl leading-tight tracking-tight mb-8">
+          Cajun French API
+        </h1>
 
-      <p class="font-serif text-xl sm:text-2xl md:text-3xl leading-snug mb-8 max-w-2xl">
-        <span class="cadien">Le français cadien</span> deserves digital infrastructure.
-      </p>
+        <p class="font-serif text-xl sm:text-2xl md:text-3xl leading-snug mb-8 max-w-2xl">
+          <span class="cadien">Le français cadien</span> deserves digital infrastructure.
+        </p>
 
-      <p class="text-base sm:text-lg leading-relaxed text-cream/85 max-w-2xl mb-10 font-light">
-        A structured, searchable lexicon of <span class="cadien">français cadien</span> — built for developers, educators, linguists, and the communities who speak it.
-      </p>
+        <p class="text-base sm:text-lg leading-relaxed text-cream/85 max-w-2xl mb-10 font-light">
+          A structured, searchable lexicon of <span class="cadien">français cadien</span> — built for developers, educators, linguists, and the communities who speak it.
+        </p>
 
-      <p class="text-sm text-cream/65 tracking-wide">
-        Built by Amanda Jones
-      </p>
+        <p class="text-sm text-cream/65 tracking-wide">
+          Built by Amanda Jones (Coulon)
+        </p>
+      </div>
     </div>
+
+    <a href="#story" class="scroll-hint scroll-hint--light" aria-label="Scroll to the story">
+      <span>lire la suite</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9" />
+      </svg>
+    </a>
   </header>
 
   <!-- 2. THE STORY -->
-  <section class="bg-cream">
-    <div class="max-w-3xl mx-auto px-6 sm:px-10 py-24 sm:py-32">
-      <h2 class="font-serif-italic text-3xl sm:text-4xl md:text-5xl text-crawfish mb-3">
-        Pourquoi ça compte
-      </h2>
-      <p class="text-sm uppercase tracking-[0.2em] text-bayou mb-12">Why it matters</p>
+  <section id="story" class="frame bg-cream">
+    <div class="frame-inner">
+      <div class="max-w-3xl mx-auto w-full px-6 sm:px-10 py-20 sm:py-32">
+        <h2 class="font-serif-italic text-3xl sm:text-4xl md:text-5xl text-crawfish mb-3">
+          Pourquoi ça compte
+        </h2>
+        <p class="text-sm uppercase tracking-[0.2em] text-bayou mb-12">Why it matters</p>
 
-      <div class="rule-gold w-24 mb-12"></div>
+        <div class="rule-gold w-24 mb-12"></div>
 
-      <div class="space-y-7 text-lg leading-relaxed text-ink/90">
-        <p>
-          <span class="cadien">Cajun French</span> is an endangered language spoken across south Louisiana. Fluent speakers are elderly. Younger generations, including my own family, grew up English-dominant. <span class="cadien">La langue</span> was lost in a single generation.
-        </p>
-        <p>
-          I'm a software developer and I'm <span class="cadien">cadienne</span>. So I'm building the tool that should already exist: a public, verified, community-curated digital lexicon of <span class="cadien">français cadien</span>, with the regional granularity, spelling variants, and etymological depth that no existing dictionary tool captures.
-        </p>
+        <div class="space-y-7 text-lg leading-relaxed text-ink/90">
+          <p>
+            <span class="cadien">Cajun French</span> is an endangered language spoken across south Louisiana. Fluent speakers are elderly. Younger generations, including my own family, grew up English-dominant. <span class="cadien">La langue</span> was lost in a single generation.
+          </p>
+          <p>
+            I'm a software developer and I'm <span class="cadien">cadienne</span>. So I'm building the tool that should already exist: a public, verified, community-curated digital lexicon of <span class="cadien">français cadien</span>, with the regional granularity, spelling variants, and etymological depth that no existing dictionary tool captures.
+          </p>
+        </div>
       </div>
     </div>
+
+    <a href="#project" class="scroll-hint scroll-hint--dark" aria-label="Scroll to the project">
+      <span>le projet</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9" />
+      </svg>
+    </a>
   </section>
 
   <!-- 3. WHAT IT IS -->
-  <section class="bg-sagewash border-y border-bayou/15">
-    <div class="max-w-6xl mx-auto px-6 sm:px-10 py-24 sm:py-32">
-      <div class="max-w-3xl mb-16">
-        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl text-ink mb-3">
-          The Project
+  <section id="project" class="frame bg-sagewash border-y border-bayou/15">
+    <div class="frame-inner">
+      <div class="max-w-6xl mx-auto w-full px-6 sm:px-10 py-20 sm:py-32">
+        <div class="max-w-3xl mb-12 sm:mb-16">
+          <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl text-ink mb-3">
+            The Project
+          </h2>
+          <p class="text-sm uppercase tracking-[0.2em] text-bayou">What it is</p>
+          <div class="rule-gold w-24 mt-6"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-8">
+
+          <!-- Card 1 -->
+          <details class="card-accordion card bg-cream border border-bayou/20">
+            <summary class="flex items-center justify-between p-5 sm:p-10 gap-4">
+              <div class="flex items-center gap-4">
+                <span class="text-bayou shrink-0" aria-hidden="true">
+                  <!-- book / library icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                    <line x1="9" y1="7" x2="16" y2="7" />
+                    <line x1="9" y1="11" x2="14" y2="11" />
+                  </svg>
+                </span>
+                <h3 class="font-serif text-lg sm:text-xl text-crawfish">For everyone</h3>
+              </div>
+              <svg class="card-chevron text-bayou shrink-0 md:hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </summary>
+            <div class="px-5 pb-5 sm:px-10 sm:pb-10 md:pt-0">
+              <p class="text-ink/85 leading-relaxed">
+                Think of it as a library catalog for <span class="cadien">Cajun French</span> vocabulary: searchable, citable, and free to access.
+              </p>
+            </div>
+          </details>
+
+          <!-- Card 2 -->
+          <details class="card-accordion card bg-cream border border-bayou/20">
+            <summary class="flex items-center justify-between p-5 sm:p-10 gap-4">
+              <div class="flex items-center gap-4">
+                <span class="text-bayou shrink-0" aria-hidden="true">
+                  <!-- code brackets icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="16 18 22 12 16 6" />
+                    <polyline points="8 6 2 12 8 18" />
+                    <line x1="14" y1="4" x2="10" y2="20" />
+                  </svg>
+                </span>
+                <h3 class="font-serif text-lg sm:text-xl text-crawfish">For developers</h3>
+              </div>
+              <svg class="card-chevron text-bayou shrink-0 md:hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </summary>
+            <div class="px-5 pb-5 sm:px-10 sm:pb-10 md:pt-0">
+              <p class="text-ink/85 leading-relaxed">
+                A REST API with structured entries: regional tagging by parish, spelling variants, loanword etymology, part of speech, and example sentences. Designed from day one for future expansion to <span class="cadien">Louisiana Creole</span>.
+              </p>
+            </div>
+          </details>
+
+          <!-- Card 3 -->
+          <details class="card-accordion card bg-cream border border-bayou/20">
+            <summary class="flex items-center justify-between p-5 sm:p-10 gap-4">
+              <div class="flex items-center gap-4">
+                <span class="text-bayou shrink-0" aria-hidden="true">
+                  <!-- columns / institution icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="21" x2="21" y2="21" />
+                    <polygon points="12 3 21 8 3 8 12 3" />
+                    <line x1="6" y1="11" x2="6" y2="18" />
+                    <line x1="12" y1="11" x2="12" y2="18" />
+                    <line x1="18" y1="11" x2="18" y2="18" />
+                  </svg>
+                </span>
+                <h3 class="font-serif text-lg sm:text-xl text-crawfish">For institutions</h3>
+              </div>
+              <svg class="card-chevron text-bayou shrink-0 md:hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </summary>
+            <div class="px-5 pb-5 sm:px-10 sm:pb-10 md:pt-0">
+              <p class="text-ink/85 leading-relaxed">
+                Built with cultural accountability in mind: I aim to partner with verified contributors, maintain an audit trail, and include citations to academic sources including Valdman (2010) and Papen &amp; Rottet (1997).
+              </p>
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </div>
+
+    <a href="#contact" class="scroll-hint scroll-hint--dark" aria-label="Scroll to contact">
+      <span>contact</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9" />
+      </svg>
+    </a>
+  </section>
+
+  <!-- 4. GET INVOLVED (final frame: contact + back-to-top + footer share one snap target) -->
+  <section id="contact" class="frame frame--final bg-cream">
+    <div class="frame-inner">
+      <div class="max-w-3xl mx-auto w-full px-6 sm:px-10">
+        <h2 class="font-serif-italic text-3xl sm:text-4xl md:text-5xl text-crawfish mb-3">
+          Travaillons ensemble
         </h2>
-        <p class="text-sm uppercase tracking-[0.2em] text-bayou">What it is</p>
-        <div class="rule-gold w-24 mt-6"></div>
-      </div>
+        <p class="text-sm uppercase tracking-[0.2em] text-bayou mb-10">Let's work together</p>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        <div class="rule-gold w-24 mb-10"></div>
 
-        <!-- Card 1 -->
-        <article class="card bg-cream border border-bayou/20 p-8 sm:p-10">
-          <div class="text-bayou mb-5" aria-hidden="true">
-            <!-- book / library icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-              <line x1="9" y1="7" x2="16" y2="7" />
-              <line x1="9" y1="11" x2="14" y2="11" />
-            </svg>
-          </div>
-          <h3 class="font-serif text-xl text-crawfish mb-3">For everyone</h3>
-          <p class="text-ink/85 leading-relaxed">
-            Think of it as a library catalog for <span class="cadien">Cajun French</span> vocabulary: searchable, citable, and free to access.
-          </p>
-        </article>
+        <p class="text-lg leading-relaxed text-ink/90 mb-8">
+          Whether you're a heritage speaker, a researcher, a developer, a cultural institution, or a reclamation learner like me, I'd like to hear from you. This project is in active development and I'm seeking collaborators, community input, and institutional partners.
+        </p>
 
-        <!-- Card 2 -->
-        <article class="card bg-cream border border-bayou/20 p-8 sm:p-10">
-          <div class="text-bayou mb-5" aria-hidden="true">
-            <!-- code brackets icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="16 18 22 12 16 6" />
-              <polyline points="8 6 2 12 8 18" />
-              <line x1="14" y1="4" x2="10" y2="20" />
-            </svg>
-          </div>
-          <h3 class="font-serif text-xl text-crawfish mb-3">For developers</h3>
-          <p class="text-ink/85 leading-relaxed">
-            A REST API with structured entries: regional tagging by parish, spelling variants, loanword etymology, part of speech, and example sentences. Designed from day one for future expansion to <span class="cadien">Louisiana Creole</span>.
-          </p>
-        </article>
-
-        <!-- Card 3 -->
-        <article class="card bg-cream border border-bayou/20 p-8 sm:p-10">
-          <div class="text-bayou mb-5" aria-hidden="true">
-            <!-- columns / institution icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="3" y1="21" x2="21" y2="21" />
-              <polygon points="12 3 21 8 3 8 12 3" />
-              <line x1="6" y1="11" x2="6" y2="18" />
-              <line x1="12" y1="11" x2="12" y2="18" />
-              <line x1="18" y1="11" x2="18" y2="18" />
-            </svg>
-          </div>
-          <h3 class="font-serif text-xl text-crawfish mb-3">For institutions</h3>
-          <p class="text-ink/85 leading-relaxed">
-            Built with cultural accountability in mind: I aim to partner with verified contributors, maintain an audit trail, and include citations to academic sources including Valdman (2010) and Papen &amp; Rottet (1997).
-          </p>
-        </article>
-
+        <p class="text-lg">
+          <a href="mailto:cajunfrenchapi@gmail.com" class="email-link font-serif text-xl text-crawfish">
+            cajunfrenchapi@gmail.com
+          </a>
+        </p>
       </div>
     </div>
+
+    <a href="#hero" class="scroll-hint scroll-hint--dark back-to-top" aria-label="Back to top">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15" />
+      </svg>
+      <span>retour en haut</span>
+    </a>
+
+    <footer class="bg-cream border-t border-bayou/20">
+      <div class="max-w-6xl mx-auto px-6 sm:px-10 py-6 sm:py-8 text-sm text-ink/60 flex flex-col sm:flex-row sm:justify-between gap-2">
+        <p><a href="https://zoasystems.dev">Amanda Jones (Coulon)</a> · Cajun French API · 2026</p>
+        <p class="cadien text-bayou">merci, cher</p>
+      </div>
+    </footer>
   </section>
-
-  <!-- 4. GET INVOLVED -->
-  <section class="bg-cream">
-    <div class="max-w-3xl mx-auto px-6 sm:px-10 py-24 sm:py-32">
-      <h2 class="font-serif-italic text-3xl sm:text-4xl md:text-5xl text-crawfish mb-3">
-        Travaillons ensemble
-      </h2>
-      <p class="text-sm uppercase tracking-[0.2em] text-bayou mb-12">Let's work together</p>
-
-      <div class="rule-gold w-24 mb-12"></div>
-
-      <p class="text-lg leading-relaxed text-ink/90 mb-10">
-        Whether you're a heritage speaker, a researcher, a developer, a cultural institution, or a reclamation learner like me, I'd like to hear from you. This project is in active development and I'm seeking collaborators, community input, and institutional partners.
-      </p>
-
-      <p class="text-lg">
-        <a href="mailto:cajunfrenchapi@gmail.com" class="email-link font-serif text-xl text-crawfish">
-          cajunfrenchapi@gmail.com
-        </a>
-      </p>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="bg-cream border-t border-bayou/20">
-    <div class="max-w-6xl mx-auto px-6 sm:px-10 py-8 text-sm text-ink/60 flex flex-col sm:flex-row sm:justify-between gap-2">
-      <p><a href="https://zoasystems.dev">Amanda Jones</a> · Cajun French API · 2026</p>
-      <p class="cadien text-bayou">merci, cher</p>
-    </div>
-  </footer>
 
 </body>
 </html>
