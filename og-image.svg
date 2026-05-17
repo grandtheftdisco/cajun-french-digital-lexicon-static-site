@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,400&display=swap');</style>
+  </defs>
+
+  <rect width="1200" height="630" fill="#8B1A1A"/>
+
+  <!-- Top brace — scaled up to 1200x630, hull center y=315, height ~230px -->
+  <path d="M 208,190 C 208,190 220,145 282,145 L 528,145 C 528,145 572,145 572,98 C 572,145 616,145 616,145 L 862,145 C 862,145 924,145 936,190"
+        fill="none" stroke="#F5E6E6" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Bottom brace -->
+  <path d="M 208,440 C 208,440 220,485 282,485 L 528,485 C 528,485 572,485 572,532 C 572,485 616,485 616,485 L 862,485 C 862,485 924,485 936,440"
+        fill="none" stroke="#F5E6E6" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Bow -->
+  <path d="M 208,190 Q 144,315 208,440" fill="none" stroke="#D4A0A0" stroke-width="9" stroke-linecap="round"/>
+  <!-- Stern -->
+  <path d="M 936,190 Q 1006,315 936,440" fill="none" stroke="#D4A0A0" stroke-width="9" stroke-linecap="round"/>
+
+  <!-- français cadien -->
+  <text x="572" y="322"
+        font-family="'Playfair Display', Georgia, serif"
+        font-size="86" font-weight="400" font-style="italic"
+        fill="#F5E6E6" text-anchor="middle" dominant-baseline="middle">fran&#231;ais cadien</text>
+
+  <!-- API -->
+  <text x="572" y="378"
+        font-family="'Courier New', Courier, monospace"
+        font-size="24" fill="#C9A84C"
+        text-anchor="middle" letter-spacing="16">API</text>
+</svg>

@@ -9,10 +9,7 @@
 
   <link rel="canonical" href="https://cajunfrench.zoasystems.dev/" />
 
-  <!-- TODO: add favicon (favicon.ico / favicon-32x32.png / apple-touch-icon.png) — tracked with the OG image task -->
-  <!-- <link rel="icon" href="/favicon.ico" sizes="any" /> -->
-  <!-- <link rel="icon" href="/favicon.svg" type="image/svg+xml" /> -->
-  <!-- <link rel="apple-touch-icon" href="/apple-touch-icon.png" /> -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
   <!-- Open Graph (Facebook, LinkedIn, iMessage, Slack, Discord) -->
   <meta property="og:type" content="website" />
@@ -21,19 +18,17 @@
   <meta property="og:description" content="Le français cadien deserves digital infrastructure. A searchable, citable lexicon of Cajun French — for developers, educators, linguists, and the communities who speak it." />
   <meta property="og:locale" content="en_US" />
   <meta property="og:site_name" content="Cajun French API" />
-  <!-- TODO: uncomment after og-image.png ships — without the file these would 404 in previews -->
-  <!-- <meta property="og:image" content="https://cajunfrench.zoasystems.dev/og-image.png" /> -->
-  <!-- <meta property="og:image:width" content="1200" /> -->
-  <!-- <meta property="og:image:height" content="630" /> -->
-  <!-- <meta property="og:image:alt" content="Cajun French API — Le français cadien deserves digital infrastructure" /> -->
+  <!-- SVG OG image: Facebook renders it; Twitter/X, iMessage, Slack, Discord, LinkedIn do not. Add a 1200x630 PNG fallback to fix previews on those platforms. -->
+  <meta property="og:image" content="https://cajunfrench.zoasystems.dev/og-image.svg" />
+  <meta property="og:image:type" content="image/svg+xml" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Cajun French API — Le français cadien deserves digital infrastructure" />
 
-  <!-- Twitter / X -->
+  <!-- Twitter / X: card stays 'summary' (text-only) until a PNG fallback exists — Twitter does not render SVG images. -->
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Cajun French API" />
   <meta name="twitter:description" content="Le français cadien deserves digital infrastructure. A searchable, citable lexicon of Cajun French." />
-  <!-- TODO: switch card back to 'summary_large_image' and uncomment image tags after og-image.png ships -->
-  <!-- <meta name="twitter:image" content="https://cajunfrench.zoasystems.dev/og-image.png" /> -->
-  <!-- <meta name="twitter:image:alt" content="Cajun French API — Le français cadien deserves digital infrastructure" /> -->
 
   <!-- Structured data: identifies the project + its author for search engines -->
   <script type="application/ld+json">
