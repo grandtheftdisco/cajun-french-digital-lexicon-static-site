@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cajunfrench.zoasystems.dev/sitemap.xml
