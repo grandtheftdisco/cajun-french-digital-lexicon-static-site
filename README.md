@@ -1,6 +1,6 @@
 # cajun-french-api-site
 
-Static landing page for the [Cajun French API](https://cajunfrenchapi.zoasystems.dev) — a community-curated digital lexicon of *le français cadien*.
+Static landing page for the [Cajun French Digital Lexicon](https://cajunfrench.zoasystems.dev) — a community-curated digital lexicon of *le français cadien*, with an open API.
 
 ## Purpose
 
