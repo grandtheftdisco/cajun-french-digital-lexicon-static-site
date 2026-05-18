@@ -1,4 +1,4 @@
-# cajun-french-api-site
+# cajun-french-lexicon-site
 
 Static landing page for the [Cajun French Digital Lexicon](https://cajunfrench.zoasystems.dev) — a community-curated digital lexicon of *le français cadien*, with an open API.
 
@@ -18,8 +18,8 @@ Static landing page for the [Cajun French Digital Lexicon](https://cajunfrench.z
 Clone the repo and open `index.html` in a browser. That's it.
 
 ```bash
-git clone https://github.com/grandtheftdisco/cajun-french-api-site
-cd cajun-french-api-site
+git clone https://github.com/grandtheftdisco/cajun-french-lexicon-site
+cd cajun-french-lexicon-site
 open index.html
 ```
 ## Related
